@@ -24,6 +24,9 @@ public class ResColorValue extends ResIntValue {
         super(value, rawValue, "color");
     }
 
+    /**
+     * 编码
+     */
     @Override
     protected String encodeAsResXml() {
         return String.format("#%08x", mValue);

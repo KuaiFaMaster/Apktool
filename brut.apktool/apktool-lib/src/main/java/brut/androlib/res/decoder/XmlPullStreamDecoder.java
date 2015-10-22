@@ -33,6 +33,10 @@ import brut.androlib.res.data.ResTable;
 import brut.androlib.res.util.ExtXmlSerializer;
 
 /**
+ * xml专用解码器<br>
+ * 本类主要对XmlPullParser的方法进行了组合，封装<br>
+ * 添加注释作者：Elliot<br>
+ * 
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class XmlPullStreamDecoder implements ResStreamDecoder {
@@ -42,6 +46,7 @@ public class XmlPullStreamDecoder implements ResStreamDecoder {
         this.mSerial = serializer;
     }
 
+   
     @Override
     public void decode(InputStream in, OutputStream out)
             throws AndrolibException {
@@ -58,7 +63,16 @@ public class XmlPullStreamDecoder implements ResStreamDecoder {
                 public void event(XmlPullParser pp)
                         throws XmlPullParserException, IOException {
                     int type = pp.getEventType();
-
+//                    START DOCUMENT
+//                    document start - parser has not yet read any input
+//                    START_TAG
+//                    parser is on start tag
+//                    TEXT
+//                    parser is on element content
+//                    END_TAG
+//                    parser is on end tag
+//                    END_DOCUMENT
+//                    document finished and no more parsing is allowed
                     if (type == XmlPullParser.START_TAG) {
                         if ("manifest".equalsIgnoreCase(pp.getName())) {
                             try {
@@ -82,7 +96,7 @@ public class XmlPullStreamDecoder implements ResStreamDecoder {
                     }
                     super.event(pp);
                 }
-
+                //manifest解析
                 private boolean parseManifest(XmlPullParser pp)
                         throws AndrolibException {
                     String attr_name;

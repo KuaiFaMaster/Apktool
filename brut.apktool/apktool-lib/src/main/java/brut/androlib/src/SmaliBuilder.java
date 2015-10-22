@@ -60,6 +60,7 @@ public class SmaliBuilder {
         }
     }
 
+    
     private void buildFile(String fileName, DexBuilder dexBuilder)
             throws AndrolibException, IOException {
         File inFile = new File(mSmaliDir, fileName);

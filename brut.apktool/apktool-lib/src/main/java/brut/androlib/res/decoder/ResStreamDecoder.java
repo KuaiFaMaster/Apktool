@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * Elliot注释<br>
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public interface ResStreamDecoder {

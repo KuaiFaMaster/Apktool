@@ -20,9 +20,12 @@ import java.io.*;
 import org.xmlpull.mxp1_serializer.MXSerializer;
 
 /**
+ * Elliot注释<br>
+ * 拓展MX序列者<br>
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
+	
     @Override
     public void startDocument(String encoding, Boolean standalone)
             throws IOException, IllegalArgumentException, IllegalStateException {
@@ -31,6 +34,9 @@ public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
         this.newLine();
     }
 
+    /**
+     * 写入属性值
+     */
     @Override
     protected void writeAttributeValue(String value, Writer out)
             throws IOException {

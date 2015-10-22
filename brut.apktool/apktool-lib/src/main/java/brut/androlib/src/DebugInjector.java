@@ -22,6 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Elliot注释<br>
+ * Debug注射者<br>
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class DebugInjector {
@@ -55,6 +57,9 @@ public class DebugInjector {
         }
     }
 
+    /**
+     * 解析参数数量，非静态－1<br>
+     */
     private void parseParamsNumber(String definition) throws AndrolibException {
         int pos = definition.indexOf('(');
         if (pos == -1) {
