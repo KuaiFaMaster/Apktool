@@ -65,7 +65,7 @@ public class AXmlResourceParser implements XmlResourceParser {
     public void setAttrDecoder(ResAttrDecoder attrDecoder) {
         mAttrDecoder = attrDecoder;
     }
-
+    //打开数据输入流，给对象m_reader 赋值
     public void open(InputStream stream) {
         close();
         if (stream != null) {
@@ -117,8 +117,9 @@ public class AXmlResourceParser implements XmlResourceParser {
         }
         return eventType;
     }
+	// 依次解析xml 数据
 
-    @Override
+    @Override 
     public String nextText() throws XmlPullParserException, IOException {
         if (getEventType() != START_TAG) {
             throw new XmlPullParserException("Parser must be on START_TAG to read next text.", this, null);
@@ -476,7 +477,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             return defaultValue;
         }
         return getAttributeResourceValue(index, defaultValue);
-    }
+    }                                                                                                                           
 
     @Override
     public int getAttributeListValue(int index, String[] options, int defaultValue) {
@@ -604,7 +605,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             int offset = m_dataLength - 1;
             return m_data[offset];
         }
-
+	//获取 m_data 数据的数量
         public final int getAccumulatedCount(int depth) {
             if (m_dataLength == 0 || depth < 0) {
                 return 0;
@@ -621,7 +622,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             }
             return accumulatedCount;
         }
-
+	// 
         public final void push(int prefix, int uri) {
             if (m_depth == 0) {
                 increaseDepth();
@@ -699,11 +700,11 @@ public class AXmlResourceParser implements XmlResourceParser {
         public final int findUri(int prefix) {
             return find(prefix, true);
         }
-
+	// 获取数据量
         public final int getDepth() {
             return m_depth;
         }
-
+	//增加数据量
         public final void increaseDepth() {
             ensureDataCapacity(2);
             int offset = m_dataLength;
@@ -712,7 +713,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             m_dataLength += 2;
             m_depth += 1;
         }
-
+	//减少数据量
         public final void decreaseDepth() {
             if (m_dataLength == 0) {
                 return;
@@ -726,7 +727,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             m_count -= count;
             m_depth -= 1;
         }
-
+	//确保数据充足
         private void ensureDataCapacity(int capacity) {
             int available = (m_data.length - m_dataLength);
             if (available > capacity) {
@@ -737,7 +738,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             System.arraycopy(m_data, 0, newData, 0, m_dataLength);
             m_data = newData;
         }
-
+	// 返回在prefixOrUri +1prefixOrUri 的数据数据
         private final int find(int prefixOrUri, boolean prefix) {
             if (m_dataLength == 0) {
                 return -1;
@@ -761,7 +762,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             }
             return -1;
         }
-
+	// 获取 m_data 中指定位置的数据
         private final int get(int index, boolean prefix) {
             if (m_dataLength == 0 || index < 0) {
                 return -1;
@@ -792,7 +793,7 @@ public class AXmlResourceParser implements XmlResourceParser {
     final StringBlock getStrings() {
         return m_strings;
     }
-
+	// 获取资源的长度
     private final int getAttributeOffset(int index) {
         if (m_event != START_TAG) {
             throw new IndexOutOfBoundsException("Current event is not START_TAG.");
@@ -803,7 +804,8 @@ public class AXmlResourceParser implements XmlResourceParser {
         }
         return offset;
     }
-
+  // 能否找到命名空间的xml
+  
     private final int findAttribute(String namespace, String attribute) {
         if (m_strings == null || attribute == null) {
             return -1;
@@ -821,7 +823,9 @@ public class AXmlResourceParser implements XmlResourceParser {
         }
         return -1;
     }
-
+/**
+* 初始化重置属性值
+**/
     private final void resetEventInfo() {
         m_event = -1;
         m_lineNumber = -1;
@@ -836,14 +840,14 @@ public class AXmlResourceParser implements XmlResourceParser {
     private final void doNext() throws IOException {
         // Delayed initialization.
         if (m_strings == null) {
-            m_reader.skipCheckInt(CHUNK_AXML_FILE);
+            m_reader.skipCheckInt(CHUNK_AXML_FILE); //检查是否被授权输入数据
 
 			/*
 			 * chunkSize
 			 */
             m_reader.skipInt();
-            m_strings = StringBlock.read(m_reader);
-            m_namespaces.increaseDepth();
+            m_strings = StringBlock.read(m_reader); //读取m_reader 中的 字段保存在StringBlock 的变量中
+            m_namespaces.increaseDepth();//增加确保命名空间的数据容量
             m_operational = true;
         }
 
@@ -857,7 +861,7 @@ public class AXmlResourceParser implements XmlResourceParser {
         while (true) {
             if (m_decreaseDepth) {
                 m_decreaseDepth = false;
-                m_namespaces.decreaseDepth();
+                m_namespaces.decreaseDepth(); //减少数据容量
             }
 
             // Fake END_DOCUMENT event.
@@ -873,7 +877,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             } else {
                 chunkType = m_reader.readInt();
             }
-
+		// 挨个读取 m_reader 中的内容
             if (chunkType == CHUNK_RESOURCEIDS) {
                 int chunkSize = m_reader.readInt();
                 if (chunkSize < 8 || (chunkSize % 4) != 0) {
@@ -913,7 +917,7 @@ public class AXmlResourceParser implements XmlResourceParser {
 
             m_lineNumber = lineNumber;
 
-            if (chunkType == CHUNK_XML_START_TAG) {
+            if (chunkType == CHUNK_XML_START_TAG) { // 读取 m_reader 中的具体数据
                 m_namespaceUri = m_reader.readInt();
                 m_name = m_reader.readInt();
 				/* flags? */m_reader.skipInt();

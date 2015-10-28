@@ -19,6 +19,7 @@ package brut.androlib.res.data.value;
 /**
  * @author Ryszard Wi艣niewski <brut.alll@gmail.com>
  */
+ // 暂存数据的实体类
 public class ResBoolValue extends ResScalarValue {
     private final boolean mValue;
 

@@ -64,7 +64,7 @@ public class ResPackage {
     public List<ResConfig> getConfigs() {
         return new ArrayList<ResConfig>(mConfigs.values());
     }
-
+	
     public boolean hasConfig(ResConfigFlags flags) {
         return mConfigs.containsKey(flags);
     }
@@ -106,7 +106,7 @@ public class ResPackage {
         }
         return type;
     }
-
+	// 将res下面的所有文件 添加到容器中
     public Set<ResResource> listFiles() {
         Set<ResResource> ret = new HashSet<ResResource>();
         for (ResResSpec spec : mResSpecs.values()) {
@@ -118,7 +118,7 @@ public class ResPackage {
         }
         return ret;
     }
-
+	//将values下面的文件添加到map容器中
     public Collection<ResValuesFile> listValuesFiles() {
         Map<Duo<ResType, ResConfig>, ResValuesFile> ret = new HashMap<Duo<ResType, ResConfig>, ResValuesFile>();
         for (ResResSpec spec : mResSpecs.values()) {
@@ -187,7 +187,7 @@ public class ResPackage {
     public String toString() {
         return mName;
     }
-
+	// 判断 传入的包名是否和当前的包名相同
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
