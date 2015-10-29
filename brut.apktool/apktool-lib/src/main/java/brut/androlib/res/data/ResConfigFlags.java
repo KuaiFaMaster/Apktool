@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package brut.androlib.res.data;
@@ -22,6 +22,8 @@ import java.util.logging.Logger;
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResConfigFlags {
+
+
     public final short mcc;
     public final short mnc;
 
@@ -58,8 +60,8 @@ public class ResConfigFlags {
     public ResConfigFlags() {
         mcc = 0;
         mnc = 0;
-        language = new char[] { '\00', '\00' };
-        region = new char[] { '\00', '\00' };
+        language = new char[]{'\00', '\00'};
+        region = new char[]{'\00', '\00'};
         orientation = ORIENTATION_ANY;
         touchscreen = TOUCHSCREEN_ANY;
         density = DENSITY_DEFAULT;
@@ -80,6 +82,12 @@ public class ResConfigFlags {
         mQualifiers = "";
     }
 
+    /**
+     * 针对ResEntry可以根据屏幕，地区，语言，等条件有更多的配置项
+     * 当Dalvik在加载res之前会根据实际环境，再到arsc资源表中寻找该ResConfig的资源
+     * 以下是构造方法
+     */
+
     public ResConfigFlags(short mcc, short mnc, char[] language,
                           char[] region, byte orientation,
                           byte touchscreen, int density, byte keyboard, byte navigation,
@@ -88,6 +96,7 @@ public class ResConfigFlags {
                           short smallestScreenWidthDp, short screenWidthDp,
                           short screenHeightDp, char[] localeScript, char[] localeVariant,
                           boolean isInvalid) {
+        //
         if (orientation < 0 || orientation > 3) {
             LOGGER.warning("Invalid orientation value: " + orientation);
             orientation = 0;
@@ -126,7 +135,7 @@ public class ResConfigFlags {
             if (localeVariant[0] == '\00') {
                 localeVariant = null;
             }
-        }  else {
+        } else {
             localeVariant = null;
         }
 
@@ -154,10 +163,18 @@ public class ResConfigFlags {
         mQualifiers = generateQualifiers();
     }
 
+    /**
+     * 编译过的资源表文件中关于config的修饰符
+     *
+     * @return String
+     */
     public String getQualifiers() {
         return mQualifiers;
     }
 
+    /**
+     * 编译过的资源表文件中关于config的修饰符
+     */
     private String generateQualifiers() {
         StringBuilder ret = new StringBuilder();
         if (mcc != 0) {
@@ -372,6 +389,11 @@ public class ResConfigFlags {
         return ret.toString();
     }
 
+    /**
+     * 根据config获取基本的androidSDK版本
+     *
+     * @return short
+     */
     private short getNaturalSdkVersionRequirement() {
         if (density == DENSITY_ANY) {
             return SDK_LOLLIPOP;
@@ -388,6 +410,11 @@ public class ResConfigFlags {
         return 0;
     }
 
+    /**
+     * 获取地区-语言
+     *
+     * @return
+     */
     private String getLocaleString() {
         StringBuilder sb = new StringBuilder();
 
@@ -421,9 +448,15 @@ public class ResConfigFlags {
         return sb.toString();
     }
 
+    /**
+     * 转大写
+     *
+     * @param character
+     * @return
+     */
     private String toUpper(char[] character) {
         StringBuilder sb = new StringBuilder();
-        for (char ch: character) {
+        for (char ch : character) {
             sb.append(Character.toUpperCase(ch));
         }
         return sb.toString();
@@ -457,7 +490,9 @@ public class ResConfigFlags {
     // TODO: Dirty static hack. This counter should be a part of ResPackage,
     // but it would be hard right now and this feature is very rarely used.
     private static int sErrCounter = 0;
-
+    /**
+     * androidSDK版本
+     */
     public final static byte SDK_BASE = 1;
     public final static byte SDK_BASE_1_1 = 2;
     public final static byte SDK_CUPCAKE = 3;
@@ -480,16 +515,19 @@ public class ResConfigFlags {
     public final static byte SDK_LOLLIPOP = 21;
     public final static byte SDK_LOLLIPOP_MR1 = 22;
 
+    /**屏幕方向*/
     public final static byte ORIENTATION_ANY = 0;
     public final static byte ORIENTATION_PORT = 1;
     public final static byte ORIENTATION_LAND = 2;
     public final static byte ORIENTATION_SQUARE = 3;
 
+    /**触屏方式*/
     public final static byte TOUCHSCREEN_ANY = 0;
     public final static byte TOUCHSCREEN_NOTOUCH = 1;
     public final static byte TOUCHSCREEN_STYLUS = 2;
     public final static byte TOUCHSCREEN_FINGER = 3;
 
+    /**屏幕像素密度*/
     public final static int DENSITY_DEFAULT = 0;
     public final static int DENSITY_LOW = 120;
     public final static int DENSITY_MEDIUM = 160;
@@ -504,12 +542,14 @@ public class ResConfigFlags {
 
     public final static int MNC_ZERO = -1;
 
+    /**显示流向，从左到右还是从右到左*/
     public final static short MASK_LAYOUTDIR = 0xc0;
     public final static short SCREENLAYOUT_LAYOUTDIR_ANY = 0x00;
     public final static short SCREENLAYOUT_LAYOUTDIR_LTR = 0x40;
     public final static short SCREENLAYOUT_LAYOUTDIR_RTL = 0x80;
     public final static short SCREENLAYOUT_LAYOUTDIR_SHIFT = 0x06;
 
+    /**键盘*/
     public final static byte KEYBOARD_ANY = 0;
     public final static byte KEYBOARD_NOKEYS = 1;
     public final static byte KEYBOARD_QWERTY = 2;

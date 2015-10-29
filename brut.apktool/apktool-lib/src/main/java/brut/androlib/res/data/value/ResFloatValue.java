@@ -17,6 +17,7 @@
 package brut.androlib.res.data.value;
 
 /**
+ * 浮点数资源属性封装类  继承自Scalar
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResFloatValue extends ResScalarValue {

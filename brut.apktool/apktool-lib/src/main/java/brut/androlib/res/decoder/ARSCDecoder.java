@@ -351,7 +351,7 @@ public class ARSCDecoder {
     }
 
     private char[] unpackLanguageOrRegion(byte in0, byte in1, char base) throws AndrolibException {
-        // check high bit, if so we have a packed 3 letter code
+        // check high bit, if s 1o we have a packed 3 letter code
         if (((in0 >> 7) & 1) == 1) {
             int first = in1 & 0x1F;
             int second = ((in1 & 0xE0) >> 5) + ((in0 & 0x03) << 3);

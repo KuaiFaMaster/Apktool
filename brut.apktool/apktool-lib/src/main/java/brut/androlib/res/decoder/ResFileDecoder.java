@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * 资源文件解码，即在反编译时，将apk中的资源文件主要是xml文件解码，对应的是编译的编码方式的逆操作
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResFileDecoder {

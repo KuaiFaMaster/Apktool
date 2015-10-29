@@ -25,11 +25,14 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
+ * 将res中用到的基本类型抽象出来一个scalar标量父类
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public abstract class ResScalarValue extends ResIntBasedValue implements
         ResXmlEncodable, ResValuesXmlSerializable {
+    /**标量的类型 如float，string, int*/
     protected final String mType;
+    /**原生值*/
     protected final String mRawValue;
 
     protected ResScalarValue(String type, int rawIntValue, String rawValue) {
@@ -50,6 +53,7 @@ public abstract class ResScalarValue extends ResIntBasedValue implements
         return encodeAsResXmlValue();
     }
 
+    /**封装resxml资源值*/
     @Override
     public String encodeAsResXmlValue() throws AndrolibException {
         if (mRawValue != null) {
@@ -58,6 +62,7 @@ public abstract class ResScalarValue extends ResIntBasedValue implements
         return encodeAsResXml();
     }
 
+    /**替换转义*/
     public String encodeAsResXmlNonEscapedItemValue() throws AndrolibException {
         return encodeAsResXmlValue().replace("&amp;", "&").replace("&lt;","<");
     }
@@ -66,10 +71,12 @@ public abstract class ResScalarValue extends ResIntBasedValue implements
         return ResXmlEncoders.hasMultipleNonPositionalSubstitutions(mRawValue);
     }
 
+    /**序列化成资源xml*/
     @Override
     public void serializeToResValuesXml(XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {
         String type = res.getResSpec().getType().getName();
+        /**验证是否该属性的类型  比如true， 34dp */
         boolean item = !"reference".equals(mType) && !type.equals(mType);
 
         String body = encodeAsResXmlValue();
@@ -83,7 +90,7 @@ public abstract class ResScalarValue extends ResIntBasedValue implements
             }
         }
 
-        // check for using attrib as node or item
+        /**构造资源值的xml节点*/
         String tagName = item ? "item" : type;
 
         serializer.startTag(null, tagName);

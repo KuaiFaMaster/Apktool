@@ -34,9 +34,11 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
+ * apk反编译器
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ApkDecoder {
+
     public ApkDecoder() {
         this(new Androlib());
     }
@@ -67,6 +69,7 @@ public class ApkDecoder {
         mApi = api;
     }
 
+    /**反编译的入口*/
     public void decode() throws AndrolibException, IOException, DirectoryException {
         File outDir = getOutDir();
 
@@ -87,18 +90,23 @@ public class ApkDecoder {
 
         LOGGER.info("Using Apktool " + Androlib.getVersion() + " on " + mApkFile.getName());
 
+        //处理res
         if (hasResources()) {
             switch (mDecodeResources) {
+                //直接以arsc的方式解压出资源，不解码
                 case DECODE_RESOURCES_NONE:
                     mAndrolib.decodeResourcesRaw(mApkFile, outDir);
                     break;
+                //解码
                 case DECODE_RESOURCES_FULL:
                     setTargetSdkVersion();
                     setAnalysisMode(mAnalysisMode, true);
 
+                    //处理manifest文件
                     if (hasManifest()) {
                         mAndrolib.decodeManifestWithResources(mApkFile, outDir, getResTable());
                     }
+                    //处理res下的文件
                     mAndrolib.decodeResourcesFull(mApkFile, outDir, getResTable());
                     break;
             }
@@ -118,20 +126,25 @@ public class ApkDecoder {
             }
         }
 
+        //处理java代码文件
         if (hasSources()) {
             switch (mDecodeSources) {
+                //直接导出dex文件，不解码成smali
                 case DECODE_SOURCES_NONE:
                     mAndrolib.decodeSourcesRaw(mApkFile, outDir, "classes.dex");
                     break;
+                //反编译成smali代码
                 case DECODE_SOURCES_SMALI:
                     mAndrolib.decodeSourcesSmali(mApkFile, outDir, "classes.dex", mDebug, mDebugLinePrefix, mBakDeb, mApi);
                     break;
+                //反编译成java代码
                 case DECODE_SOURCES_JAVA:
                     mAndrolib.decodeSourcesJava(mApkFile, outDir, mDebug);
                     break;
             }
         }
 
+        //如果存在多个包名的处理方式
         if (hasMultipleSources()) {
             // foreach unknown dex file in root, lets disassemble it
             Set<String> files = mApkFile.getDirectory().getFiles(true);
@@ -154,10 +167,13 @@ public class ApkDecoder {
             }
         }
 
+        //处理raw和assets下的文件，原样解压
         mAndrolib.decodeRawFiles(mApkFile, outDir);
+        //处理其他apk下的文件（指的是除开manifest，libs，assets，res，src以外的文件）
         mAndrolib.decodeUnknownFiles(mApkFile, outDir, mResTable);
         mUncompressedFiles = new ArrayList<String>();
         mAndrolib.recordUncompressedFiles(mApkFile, mUncompressedFiles);
+        //保留一份原始manifest和签名
         mAndrolib.writeOriginalFiles(mApkFile, outDir);
         writeMetaFile();
     }
@@ -227,6 +243,7 @@ public class ApkDecoder {
         mAndrolib.apkOptions.frameworkFolderLocation = dir;
     }
 
+    /**检查apk文件*/
     public ResTable getResTable() throws AndrolibException {
         if (mResTable == null) {
             boolean hasResources = hasResources();
@@ -296,6 +313,7 @@ public class ApkDecoder {
         return mOutDir;
     }
 
+    //以下大多为处理yml，以便合包的时候保持相同的设置
     private void writeMetaFile() throws AndrolibException {
         Map<String, Object> meta = new LinkedHashMap<String, Object>();
         meta.put("version", Androlib.getVersion());

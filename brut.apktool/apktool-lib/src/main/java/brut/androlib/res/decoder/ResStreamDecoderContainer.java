@@ -23,9 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 资源流解码容器
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResStreamDecoderContainer {
+
+    /**多个解码器，处理诸如xml，jpg，png, 9宫图等*/
     private final Map<String, ResStreamDecoder> mDecoders = new HashMap<String, ResStreamDecoder>();
 
     public void decode(InputStream in, OutputStream out, String decoderName)
