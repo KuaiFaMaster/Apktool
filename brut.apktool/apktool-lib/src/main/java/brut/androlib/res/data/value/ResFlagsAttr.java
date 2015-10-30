@@ -73,6 +73,13 @@ public class ResFlagsAttr extends ResAttr {
         return renderFlags(Arrays.copyOf(flagItems, flagsCount));
     }
 
+	
+	/**
+	 * Add labels for the serializer
+	 * @param serializer
+     * @param ResResource
+     * @throws AndrolibException,IOException
+     */
     @Override
     protected void serializeBody(XmlSerializer serializer, ResResource res)
             throws AndrolibException, IOException {
@@ -87,6 +94,12 @@ public class ResFlagsAttr extends ResAttr {
         }
     }
 
+	/**
+	 * Find a int in a int Array,if find this one return true,else return false
+	 * @param int flag
+     * @param int[] flags
+	 * @return true|false
+     */
     private boolean isSubpartOf(int flag, int[] flags) {
         for (int i = 0; i < flags.length; i++) {
             if ((flags[i] & flag) == flag) {
@@ -96,6 +109,12 @@ public class ResFlagsAttr extends ResAttr {
         return false;
     }
 
+	/**
+	 * From the 2nd elements to the last of the  FlagItem Array to String 
+	 * @param FlagItem[] flags,a FlagItem Array
+	 * @return String|null
+     * @throws AndrolibException
+     */
     private String renderFlags(FlagItem[] flags) throws AndrolibException {
         String ret = "";
         for (int i = 0; i < flags.length; i++) {

@@ -24,15 +24,29 @@ import brut.androlib.AndrolibException;
 public class ResFileValue extends ResIntBasedValue {
     private final String mPath;
 
+	
+	/**
+	 * Init the String mPath 
+     */
     public ResFileValue(String path, int rawIntValue) {
         super(rawIntValue);
         this.mPath = path;
     }
 
+	/**
+	 * Get the String mPath
+     * @return mPath
+     */
     public String getPath() {
         return mPath;
     }
 
+	 /**
+	 * If the String mPath is started with the word "res", 
+     * finds the values of mPath from 5th to the end
+     * @return String
+     * @throws AndrolibException
+     */
     public String getStrippedPath() throws AndrolibException {
         if (!mPath.startsWith("res/")) {
             throw new AndrolibException(
@@ -41,6 +55,10 @@ public class ResFileValue extends ResIntBasedValue {
         return mPath.substring(4);
     }
 
+	/**
+	 * The function to get the String mPath 
+     * @return mPath
+     */
     @Override
     public String toString() {
         return mPath;

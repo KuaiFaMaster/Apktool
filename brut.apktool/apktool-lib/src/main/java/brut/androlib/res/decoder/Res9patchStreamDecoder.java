@@ -68,6 +68,12 @@ public class Res9patchStreamDecoder implements ResStreamDecoder {
         }
     }
 
+	/**
+	 * GetNinePatch by handle the data Array
+     * @param data
+	 * @return NinePatch
+	 * @throws AndrolibException
+     */
     private NinePatch getNinePatch(byte[] data) throws AndrolibException,
             IOException {
         ExtDataInput di = new ExtDataInput(new ByteArrayInputStream(data));
@@ -92,12 +98,26 @@ public class Res9patchStreamDecoder implements ResStreamDecoder {
         }
     }
 
+	/**
+	 * Draw line from (x1,y) to (x2,y) with the color NP_COLOR
+	 * @param BufferedImage im
+     * @param int y
+	 * @param int x1
+	 * @param int x2
+     */
     private void drawHLine(BufferedImage im, int y, int x1, int x2) {
         for (int x = x1; x <= x2; x++) {
             im.setRGB(x, y, NP_COLOR);
         }
     }
 
+	/**
+	 * Draw line from (x,y1) to (x,y2) with the color NP_COLOR
+	 * @param BufferedImage im
+     * @param int x
+	 * @param int y1
+	 * @param int y2
+     */
     private void drawVLine(BufferedImage im, int x, int y1, int y2) {
         for (int y = y1; y <= y2; y++) {
             im.setRGB(x, y, NP_COLOR);
@@ -121,6 +141,13 @@ public class Res9patchStreamDecoder implements ResStreamDecoder {
             this.yDivs = yDivs;
         }
 
+		
+		/**
+		* Decode the ExtDataInput,and get a complete NinePatch
+		* @param ExtDataInput
+		* @return NinePatch
+		* @throws  IOException
+		*/
         public static NinePatch decode(ExtDataInput di) throws IOException {
             di.skipBytes(1);
             byte numXDivs = di.readByte();

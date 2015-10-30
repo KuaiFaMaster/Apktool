@@ -32,13 +32,24 @@ public class ApktoolProperties {
         return get().getProperty(key);
     }
 
+	 /**
+     *
+     * Get the Properties sProps
+     * @return sProps
+     */
     public static Properties get() {
         if (sProps == null) {
             loadProps();
         }
         return sProps;
     }
-
+	 /**
+     *
+     * Get the value of baksmaliVersion in baksmali.properties
+	 * and the value of smaliVersion in smali.properties
+     * @return sProps
+	 * @throws NoClassDefFoundError IOException
+     */
     private static void loadProps() {
         InputStream in = ApktoolProperties.class.getResourceAsStream("/properties/apktool.properties");
         sProps = new Properties();

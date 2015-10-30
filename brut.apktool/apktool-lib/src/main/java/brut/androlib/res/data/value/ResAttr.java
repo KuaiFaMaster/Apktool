@@ -42,6 +42,13 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
         return null;
     }
 
+	
+	/**
+	 * According to the type of mTpye to add labels for the serializer
+	 * @param serializer
+     * @param ResResource
+     * @throws AndrolibException,IOException
+     */
     @Override
     public void serializeToResValuesXml(XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {
@@ -65,6 +72,15 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
         serializer.endTag(null, "attr");
     }
 
+	/**
+	 * Handle a Array with the type of Duo into a ResAttr to get the mType,mMin,mMax,mL10n
+	 * @param ResReferenceValue
+     * @param Duo<Integer, ResScalarValue>
+	 * @param ResValueFactory
+	 * @param ResPackage
+	 * @return ResAttr
+     * @throws AndrolibException
+     */
     public static ResAttr factory(ResReferenceValue parent,
                                   Duo<Integer, ResScalarValue>[] items, ResValueFactory factory,
                                   ResPackage pkg) throws AndrolibException {
@@ -118,6 +134,11 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
             throws AndrolibException, IOException {
     }
 
+	/**
+	 * This function is to get the Type as a String,which is equal to get the value (String)type
+	 * @return (String)type
+     * @throws AndrolibException
+     */
     protected String getTypeAsString() {
         String s = "";
         if ((mType & TYPE_REFERENCE) != 0) {
