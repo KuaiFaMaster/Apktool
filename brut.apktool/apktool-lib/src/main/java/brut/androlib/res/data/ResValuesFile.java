@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
+ * Elliot注释<br>
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResValuesFile {
@@ -60,6 +61,9 @@ public class ResValuesFile {
         mResources.add(res);
     }
 
+    /**
+     * 重写属于自己的equals对比方法
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

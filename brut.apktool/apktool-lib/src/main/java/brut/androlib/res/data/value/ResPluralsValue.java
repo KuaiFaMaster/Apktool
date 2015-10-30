@@ -38,7 +38,7 @@ public class ResPluralsValue extends ResBagValue implements
             mItems[items[i].m1 - BAG_KEY_PLURALS_START] = items[i].m2;
         }
     }
-
+	//–Ú¡–ªØ xml
     @Override
     public void serializeToResValuesXml(XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {

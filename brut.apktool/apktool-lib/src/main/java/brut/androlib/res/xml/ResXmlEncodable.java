@@ -20,7 +20,10 @@ import brut.androlib.AndrolibException;
 
 /**
  * @author Ryszard WiÅ›niewski <brut.alll@gmail.com>
+ * Res±àÂëµÄ½Ó¿Ú
  */
+
+
 public interface ResXmlEncodable {
     public String encodeAsResXmlAttr() throws AndrolibException;
 

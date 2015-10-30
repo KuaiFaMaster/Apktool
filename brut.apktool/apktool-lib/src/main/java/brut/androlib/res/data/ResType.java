@@ -23,6 +23,7 @@ import java.util.*;
 /**
  * @author Ryszard Wi艣niewski <brut.alll@gmail.com>
  */
+ //暂存或取res下面xml类型的类
 public final class ResType {
     private final String mName;
     private final Map<String, ResResSpec> mResSpecs = new LinkedHashMap<String, ResResSpec>();
